@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout of the Day | Cameron Christopher</title>
+  <style>
+    :root {
+      --green: #24a36c;
+      --dark: #111827;
+      --bg: #ecf5f0;
+      --card: #ffffff;
+      --accent: #0f5c8a;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #ecf5f0 0%, #e4edf7 40%, #f7fafc 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 12px;
+    }
+
+    .app-shell {
+      width: min(900px, 100%);
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(15, 32, 39, 0.18);
+      padding: 28px 26px 30px;
+      border: 1px solid rgba(18, 48, 42, 0.05);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      color: var(--dark);
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 22px;
+      color: #4b5563;
+    }
+
+    .tag-line {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-bottom: 18px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+    }
+
+    .controls-card,
+    .workout-card {
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 18px 18px 18px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .controls-card h2,
+    .workout-card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: #111827;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    select {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
+      outline: none;
+      margin-bottom: 14px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+    }
+
+    .checkbox-row label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: none;
+      background-color: var(--green);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.98rem;
+      margin-top: 8px;
+      transition: background 0.15s, transform 0.08s, box-shadow 0.15s;
+      box-shadow: 0 8px 18px rgba(36, 163, 108, 0.4);
+    }
+
+    button:hover {
+      background-color: #1b7a51;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(36, 163, 108, 0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 14px rgba(36, 163, 108, 0.35);
+    }
+
+    .workout-meta {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-bottom: 10px;
+    }
+
+    .workout-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0 0 6px;
+    }
+
+    .workout-list li {
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: #ffffff;
+      margin-bottom: 6px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .workout-list span.label {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .note {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+
+    .nav-links {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 780px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <h1>Workout of the Day</h1>
+    <p class="subtitle">A simple gym session generator built with HTML, CSS, and JavaScript.</p>
+    <p class="tag-line">Pick your focus and press <strong>Generate Workout</strong> to get a quick routine.</p>
+
+    <div class="layout">
+      <!-- Controls -->
+      <div class="controls-card">
+        <h2>Choose Your Focus</h2>
+
+        <label for="focusSelect">Muscle group focus</label>
+        <select id="focusSelect">
+          <option value="balanced">Balanced (full body)</option>
+          <option value="upper">Upper body</option>
+          <option value="lower">Lower body</option>
+          <option value="shouldersArms">Shoulders &amp; Arms</option>
+          <option value="push">Push (chest/shoulders/triceps)</option>
+          <option value="pull">Pull (back/biceps)</option>
+        </select>
+
+        <label>Include:</label>
+        <div class="checkbox-row">
+          <label><input type="checkbox" id="includeCore" checked /> Core</label>
+          <label><input type="checkbox" id="includeCardio" checked /> Cardio</label>
+        </div>
+
+        <label for="difficultySelect">Difficulty</label>
+        <select id="difficultySelect">
+          <option value="easy">Easy (3 rounds)</option>
+          <option value="medium" selected>Medium (4 rounds)</option>
+          <option value="hard">Hard (5 rounds)</option>
+        </select>
+
+        <label for="compoundCount">Number of compound movements</label>
+        <select id="compoundCount">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+        </select>
+
+        <label for="isolationCount">Number of isolation movements</label>
+        <select id="isolationCount">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+        </select>
+
+        <button id="generateBtn">Generate Workout</button>
+        <p class="note">
+          This generator is for fun and general ideas only. Always train safely and adjust
+          weights and reps to your level.
+        </p>
+      </div>
+
+      <!-- Output -->
+      <div class="workout-card">
+        <h2>Today&apos;s Session</h2>
+        <div id="workoutOutput">
+          <p class="workout-meta">
+            Choose a focus and click <strong>Generate Workout</strong> to build your plan.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="../index.html">Back to Home</a> ·
+      <a href="gym.html">My Gym Journey</a>
+    </div>
+  </div>
+
+  <script>
+    const workouts = {
+      upper: {
+        compound: [
+          "Bench press",
+          "Incline dumbbell press",
+          "Pull-ups or lat pulldown",
+          "Barbell rows",
+          "Dumbbell rows",
+          "Overhead shoulder press"
+        ],
+        isolation: [
+          "Lateral raises",
+          "Bicep curls",
+          "Hammer curls",
+          "Tricep pushdowns",
+          "Cable flys"
+        ]
+      },
+      lower: {
+        compound: [
+          "Back squats",
+          "Front squats",
+          "Romanian deadlifts",
+          "Walking lunges",
+          "Leg press"
+        ],
+        isolation: [
+          "Leg extensions",
+          "Leg curls",
+          "Calf raises",
+          "Glute bridges",
+          "Hip thrusts"
+        ]
+      },
+      shouldersArms: {
+        compound: [
+          "Barbell overhead press",
+          "Dumbbell shoulder press",
+          "Close-grip bench press",
+          "Weighted dips",
+          "Chin-ups"
+        ],
+        isolation: [
+          "Lateral raises",
+          "Front raises",
+          "Rear delt flys",
+          "Face pulls",
+          "Barbell curls",
+          "Hammer curls",
+          "Skull crushers",
+          "Cable tricep extensions"
+        ]
+      },
+      push: {
+        compound: [
+          "Flat bench press",
+          "Incline bench press",
+          "Dumbbell shoulder press",
+          "Push-ups"
+        ],
+        isolation: [
+          "Cable flys",
+          "Lateral raises",
+          "Skull crushers",
+          "Tricep pushdowns"
+        ]
+      },
+      pull: {
+        compound: [
+          "Deadlifts (moderate weight)",
+          "Bent-over rows",
+          "Single-arm dumbbell rows",
+          "Lat pulldowns",
+          "Seated cable rows"
+        ],
+        isolation: [
+          "Face pulls",
+          "Hammer curls",
+          "Barbell curls",
+          "Reverse flys"
+        ]
+      },
+      balanced: {
+        compound: [
+          "Goblet squats",
+          "Romanian deadlifts",
+          "Dumbbell rows",
+          "Dumbbell shoulder press",
+          "Inverted rows",
+          "Push-ups"
+        ],
+        isolation: [
+          "Plank shoulder taps",
+          "Lateral raises",
+          "Bicep curls",
+          "Glute bridges"
+        ]
+      },
+      core: [
+        "Plank (30–45 seconds)",
+        "Hanging knee raises",
+        "Cable woodchops",
+        "Russian twists",
+        "Dead bug",
+        "Side plank (each side)"
+      ],
+      cardio: [
+        "Bike sprints (30 sec on / 30 sec off)",
+        "Row machine (500–750 m)",
+        "Treadmill intervals (1 min on / 1 min off)",
+        "Stair climber (steady pace 5–10 min)",
+        "Jump rope (2–3 min rounds)"
+      ]
+    };
+
+    function sample(array, count) {
+      const copy = [...array];
+      const chosen = [];
+      for (let i = 0; i < count && copy.length > 0; i++) {
+        const index = Math.floor(Math.random() * copy.length);
+        chosen.push(copy.splice(index, 1)[0]);
+      }
+      return chosen;
+    }
+
+    function getRounds(difficulty) {
+      if (difficulty === "easy") return 3;
+      if (difficulty === "hard") return 5;
+      return 4; // medium
+    }
+
+    function generateWorkout() {
+      const focus = document.getElementById("focusSelect").value;
+      const includeCore = document.getElementById("includeCore").checked;
+      const includeCardio = document.getElementById("includeCardio").checked;
+      const difficulty = document.getElementById("difficultySelect").value;
+      const rounds = getRounds(difficulty);
+
+      const compoundCount = parseInt(document.getElementById("compoundCount").value, 10);
+      const isolationCount = parseInt(document.getElementById("isolationCount").value, 10);
+
+      const focusData = workouts[focus] || workouts.balanced;
+
+      const compoundList = focusData.compound || [];
+      const isolationList = focusData.isolation || [];
+      const compoundExercises = sample(compoundList, compoundCount);
+      const isolationExercises = sample(isolationList, isolationCount);
+
+      const coreExercises = includeCore ? sample(workouts.core, 2) : [];
+      const cardioExercises = includeCardio ? sample(workouts.cardio, 1) : [];
+
+      const container = document.getElementById("workoutOutput");
+      container.innerHTML = "";
+
+      const meta = document.createElement("p");
+      meta.className = "workout-meta";
+      meta.textContent =
+        focus.charAt(0).toUpperCase() +
+        focus.slice(1) +
+        " focus · " +
+        rounds +
+        " rounds";
+      container.appendChild(meta);
+
+      const list = document.createElement("ul");
+      list.className = "workout-list";
+
+      compoundExercises.forEach((exercise, index) => {
+        const li = document.createElement("li");
+        const labelSpan = document.createElement("span");
+        labelSpan.className = "label";
+        labelSpan.textContent = "Compound " + (index + 1);
+        const textSpan = document.createElement("span");
+        textSpan.textContent = exercise + " — 6–10 reps";
+        li.appendChild(labelSpan);
+        li.appendChild(textSpan);
+        list.appendChild(li);
+      });
+
+      isolationExercises.forEach((exercise, index) => {
+        const li = document.createElement("li");
+        const labelSpan = document.createElement("span");
+        labelSpan.className = "label";
+        labelSpan.textContent = "Isolation " + (index + 1);
+        const textSpan = document.createElement("span");
+        textSpan.textContent = exercise + " — 10–15 reps";
+        li.appendChild(labelSpan);
+        li.appendChild(textSpan);
+        list.appendChild(li);
+      });
+
+      coreExercises.forEach((exercise, index) => {
+        const li = document.createElement("li");
+        const labelSpan = document.createElement("span");
+        labelSpan.className = "label";
+        labelSpan.textContent = "Core " + (index + 1);
+        const textSpan = document.createElement("span");
+        textSpan.textContent = exercise;
+        li.appendChild(labelSpan);
+        li.appendChild(textSpan);
+        list.appendChild(li);
+      });
+
+      cardioExercises.forEach((exercise) => {
+        const li = document.createElement("li");
+        const labelSpan = document.createElement("span");
+        labelSpan.className = "label";
+        labelSpan.textContent = "Finisher";
+        const textSpan = document.createElement("span");
+        textSpan.textContent = exercise + " — 5–10 minutes";
+        li.appendChild(labelSpan);
+        li.appendChild(textSpan);
+        list.appendChild(li);
+      });
+
+      container.appendChild(list);
+
+      const note = document.createElement("p");
+      note.className = "note";
+      note.textContent =
+        "Rest 60–90 seconds between sets. Adjust weight, tempo, and volume to your experience and goals.";
+      container.appendChild(note);
+    }
+
+    document
+      .getElementById("generateBtn")
+      .addEventListener("click", generateWorkout);
+  </script>
+</body>
+</html>

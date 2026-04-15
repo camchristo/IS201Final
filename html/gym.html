@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cameron Christopher's gym journey scratch page" />
+  <title>My Gym Journey</title>
+  <!-- Link to your custom scratch-page stylesheet -->
+  <link rel="stylesheet" href="../styles/gymstyles.css" />
+</head>
+<body>
+  <!-- Top section with on-page anchor target -->
+  <div class="top-banner" id="top">
+    <h1>Rise and Grind</h1>
+    <p>General fitness, sports performance, and staying consistent.</p>
+    <div class="top-links">
+      <a href="#why-train">Why I Train</a>
+      <a href="#favorite-lifts">Favorite Lifts</a>
+      <a href="#video">Workout Video</a>
+      <a href="#tableau">Fitness Dashboard</a>
+      <a href="../index.html">Back to Home</a>
+      <a href="workoutgen.html">Workout App</a>
+    </div>
+  </div>
+
+  <!-- Intro section -->
+  <div class="intro-box" id="why-train">
+    <h2>Why I Train</h2>
+    <p>
+      The gym is one of my favorite ways to stay disciplined, improve my energy, and build
+      a stronger base for sports performance. I like training because it gives me a challenge,
+      keeps me sharp, and helps me see what consistency can do over time.
+    </p>
+    <p>
+      This page is a fun look at what I enjoy about lifting, what I focus on in my workouts,
+      and why fitness matters to me.
+    </p>
+  </div>
+
+  <!-- Grid with nested lists + image -->
+  <div class="content-grid">
+    <div class="lift-box" id="favorite-lifts">
+      <h2>My Workout Priorities</h2>
+      <ol>
+        <li>Build strength
+          <ul>
+            <li>Bench press</li>
+            <li>Leg Press</li>
+            <li>Seated Cable Row</li>
+          </ul>
+        </li>
+        <li>Improve athletic performance
+          <ul>
+            <li>Explosive leg work</li>
+            <li>Sled pushes</li>
+            <li>Sprint-focused conditioning</li>
+          </ul>
+        </li>
+        <li>Stay consistent
+          <ul>
+            <li>Train even on busy weeks</li>
+            <li>Keep workouts simple and effective</li>
+            <li>Focus on long-term progress</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="image-box">
+      <h2>Gym Mindset</h2>
+      <!-- You can swap this Unsplash image for one of your own later -->
+      <img
+        src="../images/DomGym.jpg"
+        alt="Dom and Hadley in the gym" />
+      <p>
+        I like workouts that feel competitive, challenging, and useful beyond the gym itself. Plus I get to make more friends! 
+      </p>
+    </div>
+  </div>
+
+  <!-- On-page anchor section -->
+  <div class="anchor-box">
+    <h2>Quick Jump</h2>
+    <p>
+      Need to jump back to the top of the page? Use this on-page anchor:
+      <a href="#top">Back to top</a>
+    </p>
+  </div>
+
+  <!-- YouTube embed -->
+  <div class="video-box" id="video">
+    <h2>Workout Video</h2>
+    <p>
+      This embedded YouTube video fits the fitness theme and helps satisfy the project requirement
+      for an embedded video.
+    </p>
+    <div class="video-wrapper">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/4A11rvwsPy8"
+        title="Gym Workout Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Tableau embed -->
+  <div class="tableau-box" id="tableau">
+    <h2>Live Tableau Fitness Dashboard</h2>
+
+    <div class="tableauPlaceholder" id="viz1744755600000" style="position: relative;">
+      <noscript>
+        <a href="https://public.tableau.com/views/FitnessDashboard_17343860475980/FitnessDashboard?:showVizHome=no">
+          <img alt="Fitness Dashboard"
+               src="https://public.tableau.com/static/images/Fi/FitnessDashboard_17343860475980/FitnessDashboard/1_rss.png"
+               style="border: none" />
+        </a>
+      </noscript>
+      <object class="tableauViz" style="display:none;">
+        <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+        <param name="embed_code_version" value="3" />
+        <param name="site_root" value="" />
+        <param name="name" value="FitnessDashboard_17343860475980/FitnessDashboard" />
+        <param name="tabs" value="no" />
+        <param name="toolbar" value="yes" />
+        <param name="showVizHome" value="no" />
+      </object>
+    </div>
+  </div>
+
+  <!-- Footer navigation -->
+  <div class="footer-box">
+    <h2>Navigation</h2>
+    <p><a href="../index.html">Home Page</a></p>
+    <p><a href="resume.html">Resume Page</a></p>
+    <p><a href="workoutgen.html">Workout Generator</a></p>
+  </div>
+
+  <!-- Tableau script (must stay at the end of the body) -->
+  <script type="text/javascript">
+    var divElement = document.getElementById('viz1744755600000');
+    var vizElement = divElement.getElementsByTagName('object')[0];
+    vizElement.style.width = '100%';
+    vizElement.style.height = '800px';
+    var scriptElement = document.createElement('script');
+    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+  </script>
+</body>
+</html>
